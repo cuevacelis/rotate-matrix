@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useCallback } from 'react';
-import { MatrixFilter } from './matrix-filter';
-import { Matrix } from './matrix';
-import { MatrixResult } from './matrix-result';
-import { Button } from '@/components/ui/button';
+import React, { useState, useCallback } from "react";
+import { MatrixFilter } from "./matrix-filter";
+import { Matrix } from "./matrix";
+import { MatrixResult } from "./matrix-result";
+import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,24 +12,36 @@ import {
   AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { RotationDirection, rotateMatrix, createEmptyMatrix } from '@/lib/utils/matrix-utils';
-import { matrixConfigSchema, matrixSchema } from '@/lib/validations/matrix-validation';
-import { RotateCw } from 'lucide-react';
+} from "@/components/ui/alert-dialog";
+import {
+  RotationDirection,
+  rotateMatrix,
+  createEmptyMatrix,
+} from "@/lib/utils/matrix-utils";
+import {
+  matrixConfigSchema,
+  matrixSchema,
+} from "@/lib/validations/matrix-validation";
+import { RotateCw } from "lucide-react";
 
-export function MatrixRotateContainer() {
-  const [size, setSize] = useState<number>(3);
-  const [direction, setDirection] = useState<RotationDirection>('clockwise');
-  const [matrix, setMatrix] = useState<number[][]>(createEmptyMatrix(3));
+interface MatrixRotateContainerProps {
+  size: string;
+  direction: RotationDirection;
+}
+export function MatrixRotateContainer(props: MatrixRotateContainerProps) {
+  const [size, setSize] = useState<number>(parseInt(props.size));
+  const [direction, setDirection] = useState<RotationDirection>(
+    props.direction
+  );
+  const [matrix, setMatrix] = useState<number[][]>(createEmptyMatrix(size));
   const [originalMatrix, setOriginalMatrix] = useState<number[][]>([]);
   const [resultMatrix, setResultMatrix] = useState<number[][]>([]);
   const [showResult, setShowResult] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const [showErrorDialog, setShowErrorDialog] = useState<boolean>(false);
 
   const handleSizeChange = useCallback((newSize: number) => {
     setSize(newSize);
-    // Solo crear la matriz si el tamaño es válido (entre 2 y 10)
     if (newSize >= 2 && newSize <= 10) {
       setMatrix(createEmptyMatrix(newSize));
     }
@@ -42,11 +54,14 @@ export function MatrixRotateContainer() {
 
   const handleRotateMatrix = () => {
     try {
-      const configValidation = matrixConfigSchema.safeParse({ size, direction });
+      const configValidation = matrixConfigSchema.safeParse({
+        size,
+        direction,
+      });
       if (!configValidation.success) {
         const errorMessage = configValidation.error.issues
-          .map(issue => issue.message)
-          .join(', ');
+          .map((issue) => issue.message)
+          .join(", ");
         setError(errorMessage);
         setShowErrorDialog(true);
         return;
@@ -54,29 +69,31 @@ export function MatrixRotateContainer() {
 
       const matrixValidation = matrixSchema.safeParse(matrix);
       if (!matrixValidation.success) {
-        setError('La matriz contiene valores inválidos. Asegúrese de que todos los campos estén llenos con números válidos.');
+        setError(
+          "La matriz contiene valores inválidos. Asegúrese de que todos los campos estén llenos con números válidos."
+        );
         setShowErrorDialog(true);
         return;
       }
 
       const rotatedMatrix = rotateMatrix(matrix, direction);
-      setOriginalMatrix([...matrix.map(row => [...row])]);
+      setOriginalMatrix([...matrix.map((row) => [...row])]);
       setResultMatrix(rotatedMatrix);
       setShowResult(true);
-      setError('');
+      setError("");
     } catch {
-      setError('Ocurrió un error inesperado durante la rotación.');
+      setError("Ocurrió un error inesperado durante la rotación.");
       setShowErrorDialog(true);
     }
   };
 
   const handleCloseErrorDialog = () => {
     setShowErrorDialog(false);
-    setError('');
+    setError("");
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-8 p-4">
+    <section className="w-full max-w-6xl mx-auto space-y-8 p-4">
       <MatrixFilter
         size={size}
         direction={direction}
@@ -126,9 +143,7 @@ export function MatrixRotateContainer() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Error de Validación</AlertDialogTitle>
-            <AlertDialogDescription>
-              {error}
-            </AlertDialogDescription>
+            <AlertDialogDescription>{error}</AlertDialogDescription>
           </AlertDialogHeader>
           <div className="flex justify-end">
             <AlertDialogAction onClick={handleCloseErrorDialog}>
@@ -137,6 +152,6 @@ export function MatrixRotateContainer() {
           </div>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </section>
   );
 }
