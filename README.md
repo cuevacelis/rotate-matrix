@@ -3,8 +3,9 @@
 Una aplicación web interactiva construida con **Next.js 15** y **TypeScript** que permite rotar matrices NxN en sentido horario o antihorario de manera visual y fácil de usar.
 
 ## 🎯 Demo
+Demo pública: https://rotate-matrix-olive.vercel.app/
 
-Configura el tamaño de la matriz, introduce los valores numéricos y observa cómo se transforma la matriz al rotarla. Los resultados se muestran lado a lado para comparar fácilmente.
+Configura el tamaño de la matriz, introduce los valores numéricos y observa cómo se transforma la matriz al rotarla. Los resultados se muestran lado a lado para comparar fácilmente. 
 
 ## ✨ Características
 
@@ -84,8 +85,6 @@ pnpm test:coverage   # Tests con coberturanpm run test:watch   # Tests en modo w
 ````
 
 ## 🌐 URL Persistente
-
----
 
 La aplicación mantiene el estado de configuración en los parámetros de la URL:
 
