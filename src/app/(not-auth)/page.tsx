@@ -1,15 +1,10 @@
 import Link from "next/link";
 import { RotateCw } from "lucide-react";
-import { MatrixRotateContainer } from "./-components/matrix-rotate-container";
+import { MatrixContainer } from "./-components/matrix-container";
 
 export type RotationDirection = "clockwise" | "counterclockwise";
 
-export default async function HomePage(props: PageProps<"/">) {
-  const sizeMatrix = (await props.searchParams).size?.toString() || "3";
-  const directionRotationMatrix = ((
-    await props.searchParams
-  ).direction?.toString() || "clockwise") as RotationDirection;
-
+export default function HomePage() {
   return (
     <section className="text-center mb-12">
       <div className="flex items-center justify-center gap-3 mb-4">
@@ -34,10 +29,7 @@ export default async function HomePage(props: PageProps<"/">) {
         </Link>
       </div>
 
-      <MatrixRotateContainer
-        size={sizeMatrix}
-        direction={directionRotationMatrix}
-      />
+      <MatrixContainer />
     </section>
   );
 }

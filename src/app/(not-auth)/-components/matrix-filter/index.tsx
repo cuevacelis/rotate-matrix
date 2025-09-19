@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { RotationDirection } from "@/lib/utils/matrix-utils";
 import InputSize from "./input-size";
 import SelectOrientation from "./select-orientation";
+import { RotationDirection } from "../../page";
 
 interface MatrixFilterProps {
   size: number;

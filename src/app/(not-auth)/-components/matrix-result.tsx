@@ -1,8 +1,8 @@
 "use client";
 
-import React from 'react';
-import { Matrix } from './matrix';
-import { RotationDirection } from '@/lib/utils/matrix-utils';
+import React from "react";
+import { Matrix } from "./matrix-editable/matrix";
+import { RotationDirection } from "../page";
 
 interface MatrixResultProps {
   originalMatrix: number[][];
@@ -11,12 +11,19 @@ interface MatrixResultProps {
   direction: RotationDirection;
 }
 
-export function MatrixResult({ originalMatrix, resultMatrix, size, direction }: MatrixResultProps) {
-  const directionText = direction === 'clockwise' ? 'Horaria' : 'Antihoraria';
+export function MatrixResult({
+  originalMatrix,
+  resultMatrix,
+  size,
+  direction,
+}: MatrixResultProps) {
+  const directionText = direction === "clockwise" ? "Horaria" : "Antihoraria";
 
   return (
     <div className="space-y-6 p-4 border rounded-lg bg-card">
-      <h3 className="text-lg font-semibold text-center">Resultado de la Rotación</h3>
+      <h3 className="text-lg font-semibold text-center">
+        Resultado de la Rotación
+      </h3>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-2">

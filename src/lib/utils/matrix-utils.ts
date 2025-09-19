@@ -42,14 +42,11 @@ export function rotateMatrix(
 }
 
 export function createEmptyMatrix(size: number): number[][] {
+  if (size <= 0) {
+    throw new Error("Matrix size must be greater than 0");
+  }
+
   return Array(size)
     .fill(null)
     .map(() => Array(size).fill(0));
-}
-
-export function validateMatrix(matrix: number[][]): boolean {
-  if (!matrix || matrix.length === 0) return false;
-
-  const n = matrix.length;
-  return matrix.every((row) => row.length === n);
 }

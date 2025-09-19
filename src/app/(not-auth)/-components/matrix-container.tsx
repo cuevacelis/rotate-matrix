@@ -1,19 +1,12 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { MatrixFilter } from "./matrix-filter";
-import { Matrix } from "./matrix";
+import { Matrix } from "./matrix-editable/matrix";
 import { MatrixResult } from "./matrix-result";
 import { Button } from "@/components/ui/button";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { ErrorDialog } from "./matrix-editable/error-dialog";
 import { rotateMatrix, createEmptyMatrix } from "@/lib/utils/matrix-utils";
 import {
   matrixConfigSchema,
@@ -22,20 +15,25 @@ import {
 import { RotateCw } from "lucide-react";
 import { RotationDirection } from "../page";
 import { useQueryString } from "@/hooks/use-query-string";
+import MatrixEmpity from "./matrix-editable/matrix-empity";
+import {
+  MATRIX_SIZE,
+  MATRIX_QUERY_PARAMS,
+} from "@/app/(not-auth)/-constants/matrix-constants";
 
-interface MatrixRotateContainerProps {
-  size: string;
-  direction: RotationDirection;
-}
-export function MatrixRotateContainer(props: MatrixRotateContainerProps) {
+export function MatrixContainer() {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { createQueryString } = useQueryString();
 
-  const [size, setSize] = useState<number>(parseInt(props.size));
-  const [direction, setDirection] = useState<RotationDirection>(
-    props.direction
+  const [size, setSize] = useState<number>(
+    parseInt(searchParams.get(MATRIX_QUERY_PARAMS.SIZE) || MATRIX_SIZE.DEFAULT.toString())
   );
+  const [direction, setDirection] = useState<RotationDirection>(
+    (searchParams.get(MATRIX_QUERY_PARAMS.DIRECTION) || "clockwise") as RotationDirection
+  );
+
   const [matrix, setMatrix] = useState<number[][]>(createEmptyMatrix(size));
   const [originalMatrix, setOriginalMatrix] = useState<number[][]>([]);
   const [resultMatrix, setResultMatrix] = useState<number[][]>([]);
@@ -49,7 +47,21 @@ export function MatrixRotateContainer(props: MatrixRotateContainerProps) {
       setMatrix(createEmptyMatrix(newSize));
       setShowResult(false);
       const newUrl =
-        pathname + "?" + createQueryString("size", newSize.toString());
+        pathname +
+        "?" +
+        createQueryString(MATRIX_QUERY_PARAMS.SIZE, newSize.toString());
+      router.push(newUrl);
+    },
+    [pathname, router, createQueryString]
+  );
+
+  const handleDirectionChange = useCallback(
+    (newDirection: RotationDirection) => {
+      setDirection(newDirection);
+      const newUrl =
+        pathname +
+        "?" +
+        createQueryString(MATRIX_QUERY_PARAMS.DIRECTION, newDirection);
       router.push(newUrl);
     },
     [pathname, router, createQueryString]
@@ -58,18 +70,6 @@ export function MatrixRotateContainer(props: MatrixRotateContainerProps) {
   const handleMatrixChange = useCallback((newMatrix: number[][]) => {
     setMatrix(newMatrix);
   }, []);
-
-  const handleDirectionChange = useCallback(
-    (newDirection: RotationDirection) => {
-      setDirection(newDirection);
-
-      // Actualizar el search param 'direction' en la URL
-      const newUrl =
-        pathname + "?" + createQueryString("direction", newDirection);
-      router.push(newUrl);
-    },
-    [pathname, router, createQueryString]
-  );
 
   const handleRotateMatrix = () => {
     try {
@@ -121,20 +121,14 @@ export function MatrixRotateContainer(props: MatrixRotateContainerProps) {
       />
 
       <div className="space-y-6">
-        {size >= 2 && size <= 10 ? (
+        {size >= MATRIX_SIZE.MIN && size <= MATRIX_SIZE.MAX ? (
           <Matrix
             size={size}
             matrix={matrix}
             onMatrixChange={handleMatrixChange}
           />
         ) : (
-          <div className="text-center p-8 border rounded-lg bg-muted/50">
-            <p className="text-muted-foreground">
-              {size === 0 || isNaN(size)
-                ? "Introduce un tamaño válido para la matriz (2-10)"
-                : `El tamaño ${size} no es válido. Debe estar entre 2 y 10.`}
-            </p>
-          </div>
+          <MatrixEmpity currentSize={size} />
         )}
 
         <div className="flex justify-center">
@@ -158,19 +152,12 @@ export function MatrixRotateContainer(props: MatrixRotateContainerProps) {
         />
       )}
 
-      <AlertDialog open={showErrorDialog} onOpenChange={setShowErrorDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Error de Validación</AlertDialogTitle>
-            <AlertDialogDescription>{error}</AlertDialogDescription>
-          </AlertDialogHeader>
-          <div className="flex justify-end">
-            <AlertDialogAction onClick={handleCloseErrorDialog}>
-              Entendido
-            </AlertDialogAction>
-          </div>
-        </AlertDialogContent>
-      </AlertDialog>
+      <ErrorDialog
+        open={showErrorDialog}
+        onOpenChange={setShowErrorDialog}
+        error={error}
+        onClose={handleCloseErrorDialog}
+      />
     </section>
   );
 }
