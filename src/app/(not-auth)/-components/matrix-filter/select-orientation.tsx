@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RotationDirection } from "@/lib/utils/matrix-utils";
+import { RotationDirection } from "../../page";
 
 export default function SelectOrientation(props: {
   direction: RotationDirection;

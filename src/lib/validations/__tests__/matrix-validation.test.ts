@@ -58,7 +58,7 @@ describe('Matrix Validations', () => {
     it('should reject invalid direction', () => {
       const invalidConfig = {
         size: 3,
-        direction: 'invalid' as any
+        direction: 'invalid' as 'clockwise' | 'counterclockwise'
       };
 
       const result = matrixConfigSchema.safeParse(invalidConfig);
@@ -199,7 +199,7 @@ describe('Matrix Validations', () => {
       const invalidMatrix = [
         [1, 'invalid'],
         [3, 4]
-      ] as any;
+      ] as unknown as number[][];
 
       const result = matrixSchema.safeParse(invalidMatrix);
       expect(result.success).toBe(false);
@@ -209,7 +209,7 @@ describe('Matrix Validations', () => {
       const invalidMatrix = [
         [1, null],
         [3, 4]
-      ] as any;
+      ] as unknown as number[][];
 
       const result = matrixSchema.safeParse(invalidMatrix);
       expect(result.success).toBe(false);
@@ -219,7 +219,7 @@ describe('Matrix Validations', () => {
       const invalidMatrix = [
         [1, undefined],
         [3, 4]
-      ] as any;
+      ] as unknown as number[][];
 
       const result = matrixSchema.safeParse(invalidMatrix);
       expect(result.success).toBe(false);

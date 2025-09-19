@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { RotateCw } from "lucide-react";
 import { MatrixContainer } from "./-components/matrix-container";
+import { Suspense } from "react";
 
 export type RotationDirection = "clockwise" | "counterclockwise";
 
@@ -29,7 +30,9 @@ export default function HomePage() {
         </Link>
       </div>
 
-      <MatrixContainer />
+      <Suspense>
+        <MatrixContainer />
+      </Suspense>
     </section>
   );
 }

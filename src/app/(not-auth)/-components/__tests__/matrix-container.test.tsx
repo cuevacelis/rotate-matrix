@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { useRouter, usePathname, useSearchParams, ReadonlyURLSearchParams } from 'next/navigation'
 import { MatrixContainer } from '../matrix-container'
 
 // Mock Next.js navigation hooks
@@ -19,7 +19,7 @@ jest.mock('@/hooks/use-query-string', () => ({
 
 // Mock UI components to simplify testing
 jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, onClick, ...props }: any) => (
+  Button: ({ children, onClick, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { children: React.ReactNode }) => (
     <button onClick={onClick} {...props}>
       {children}
     </button>
@@ -28,7 +28,12 @@ jest.mock('@/components/ui/button', () => ({
 
 // Mock all complex child components
 jest.mock('../matrix-filter', () => ({
-  MatrixFilter: ({ size, direction, onSizeChange, onDirectionChange }: any) => (
+  MatrixFilter: ({ size, direction, onSizeChange, onDirectionChange }: {
+    size: number;
+    direction: string;
+    onSizeChange: (size: number) => void;
+    onDirectionChange: (direction: string) => void;
+  }) => (
     <div data-testid="matrix-filter">
       <span data-testid="current-size">{size}</span>
       <span data-testid="current-direction">{direction}</span>
@@ -39,7 +44,7 @@ jest.mock('../matrix-filter', () => ({
 }))
 
 jest.mock('../matrix-editable/matrix', () => ({
-  Matrix: ({ size }: any) => (
+  Matrix: ({ size }: { size: number }) => (
     <div data-testid="matrix">
       <span data-testid="matrix-size">{size}</span>
     </div>
@@ -48,7 +53,7 @@ jest.mock('../matrix-editable/matrix', () => ({
 
 jest.mock('../matrix-editable/matrix-empity', () => ({
   __esModule: true,
-  default: ({ currentSize }: any) => (
+  default: ({ currentSize }: { currentSize?: number }) => (
     <div data-testid="matrix-empty">
       <span data-testid="empty-current-size">{currentSize}</span>
     </div>
@@ -56,7 +61,7 @@ jest.mock('../matrix-editable/matrix-empity', () => ({
 }))
 
 jest.mock('../matrix-result', () => ({
-  MatrixResult: ({ size, direction }: any) => (
+  MatrixResult: ({ size, direction }: { size: number; direction: string }) => (
     <div data-testid="matrix-result">
       <span data-testid="result-size">{size}</span>
       <span data-testid="result-direction">{direction}</span>
@@ -65,7 +70,7 @@ jest.mock('../matrix-result', () => ({
 }))
 
 jest.mock('../matrix-editable/error-dialog', () => ({
-  ErrorDialog: ({ open, error, onClose }: any) =>
+  ErrorDialog: ({ open, error, onClose }: { open: boolean; error: string; onClose: () => void }) =>
     open ? (
       <div data-testid="error-dialog">
         <span data-testid="error-message">{error}</span>
@@ -106,7 +111,7 @@ describe('MatrixContainer', () => {
       back: jest.fn(),
       forward: jest.fn(),
       prefetch: jest.fn(),
-    } as any)
+    })
 
     mockUsePathname.mockReturnValue('/test-path')
 
@@ -116,7 +121,7 @@ describe('MatrixContainer', () => {
         if (key === 'direction') return 'clockwise'
         return null
       }),
-    } as any)
+    } as unknown as ReadonlyURLSearchParams)
   })
 
   it('renders matrix container with default values', () => {
@@ -141,7 +146,7 @@ describe('MatrixContainer', () => {
         if (key === 'direction') return 'clockwise'
         return null
       }),
-    } as any)
+    } as unknown as ReadonlyURLSearchParams)
 
     render(<MatrixContainer />)
 
@@ -190,7 +195,7 @@ describe('MatrixContainer', () => {
         if (key === 'direction') return 'counterclockwise'
         return null
       }),
-    } as any)
+    } as unknown as ReadonlyURLSearchParams)
 
     render(<MatrixContainer />)
 
@@ -201,7 +206,7 @@ describe('MatrixContainer', () => {
   it('uses default values when search params are missing', () => {
     mockUseSearchParams.mockReturnValue({
       get: jest.fn(() => null),
-    } as any)
+    } as unknown as ReadonlyURLSearchParams)
 
     render(<MatrixContainer />)
 

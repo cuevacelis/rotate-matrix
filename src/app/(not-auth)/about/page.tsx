@@ -1,12 +1,9 @@
-import Link from "next/link";
 import {
   RotateCw,
   Github,
   Linkedin,
-  ArrowLeft,
   ExternalLink,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default function About() {
   return (

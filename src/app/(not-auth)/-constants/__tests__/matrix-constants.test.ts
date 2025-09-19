@@ -129,8 +129,8 @@ describe('Matrix Constants', () => {
       expect(MATRIX_QUERY_PARAMS).toHaveProperty('DIRECTION');
     });
 
-    it('should export only expected constants', () => {
-      const moduleExports = require('../matrix-constants');
+    it('should export only expected constants', async () => {
+      const moduleExports = await import('../matrix-constants');
       const exportedKeys = Object.keys(moduleExports);
 
       expect(exportedKeys).toHaveLength(3);
