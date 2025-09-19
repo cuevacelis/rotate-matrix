@@ -1,8 +1,10 @@
-export type RotationDirection = 'clockwise' | 'counterclockwise';
+import { RotationDirection } from "@/app/(not-auth)/page";
 
 export function rotateMatrixClockwise(matrix: number[][]): number[][] {
   const n = matrix.length;
-  const result: number[][] = Array(n).fill(null).map(() => Array(n).fill(0));
+  const result: number[][] = Array(n)
+    .fill(null)
+    .map(() => Array(n).fill(0));
 
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) {
@@ -15,7 +17,9 @@ export function rotateMatrixClockwise(matrix: number[][]): number[][] {
 
 export function rotateMatrixCounterclockwise(matrix: number[][]): number[][] {
   const n = matrix.length;
-  const result: number[][] = Array(n).fill(null).map(() => Array(n).fill(0));
+  const result: number[][] = Array(n)
+    .fill(null)
+    .map(() => Array(n).fill(0));
 
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) {
@@ -26,8 +30,11 @@ export function rotateMatrixCounterclockwise(matrix: number[][]): number[][] {
   return result;
 }
 
-export function rotateMatrix(matrix: number[][], direction: RotationDirection): number[][] {
-  if (direction === 'clockwise') {
+export function rotateMatrix(
+  matrix: number[][],
+  direction: RotationDirection
+): number[][] {
+  if (direction === "clockwise") {
     return rotateMatrixClockwise(matrix);
   } else {
     return rotateMatrixCounterclockwise(matrix);
@@ -35,12 +42,14 @@ export function rotateMatrix(matrix: number[][], direction: RotationDirection): 
 }
 
 export function createEmptyMatrix(size: number): number[][] {
-  return Array(size).fill(null).map(() => Array(size).fill(0));
+  return Array(size)
+    .fill(null)
+    .map(() => Array(size).fill(0));
 }
 
 export function validateMatrix(matrix: number[][]): boolean {
   if (!matrix || matrix.length === 0) return false;
 
   const n = matrix.length;
-  return matrix.every(row => row.length === n);
+  return matrix.every((row) => row.length === n);
 }

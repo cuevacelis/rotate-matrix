@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { MatrixFilter } from "./matrix-filter";
 import { Matrix } from "./matrix";
 import { MatrixResult } from "./matrix-result";
@@ -13,22 +14,24 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  RotationDirection,
-  rotateMatrix,
-  createEmptyMatrix,
-} from "@/lib/utils/matrix-utils";
+import { rotateMatrix, createEmptyMatrix } from "@/lib/utils/matrix-utils";
 import {
   matrixConfigSchema,
   matrixSchema,
 } from "@/lib/validations/matrix-validation";
 import { RotateCw } from "lucide-react";
+import { RotationDirection } from "../page";
+import { useQueryString } from "@/hooks/use-query-string";
 
 interface MatrixRotateContainerProps {
   size: string;
   direction: RotationDirection;
 }
 export function MatrixRotateContainer(props: MatrixRotateContainerProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const { createQueryString } = useQueryString();
+
   const [size, setSize] = useState<number>(parseInt(props.size));
   const [direction, setDirection] = useState<RotationDirection>(
     props.direction
@@ -40,17 +43,33 @@ export function MatrixRotateContainer(props: MatrixRotateContainerProps) {
   const [error, setError] = useState<string>("");
   const [showErrorDialog, setShowErrorDialog] = useState<boolean>(false);
 
-  const handleSizeChange = useCallback((newSize: number) => {
-    setSize(newSize);
-    if (newSize >= 2 && newSize <= 10) {
+  const handleSizeChange = useCallback(
+    (newSize: number) => {
+      setSize(newSize);
       setMatrix(createEmptyMatrix(newSize));
-    }
-    setShowResult(false);
-  }, []);
+      setShowResult(false);
+      const newUrl =
+        pathname + "?" + createQueryString("size", newSize.toString());
+      router.push(newUrl);
+    },
+    [pathname, router, createQueryString]
+  );
 
   const handleMatrixChange = useCallback((newMatrix: number[][]) => {
     setMatrix(newMatrix);
   }, []);
+
+  const handleDirectionChange = useCallback(
+    (newDirection: RotationDirection) => {
+      setDirection(newDirection);
+
+      // Actualizar el search param 'direction' en la URL
+      const newUrl =
+        pathname + "?" + createQueryString("direction", newDirection);
+      router.push(newUrl);
+    },
+    [pathname, router, createQueryString]
+  );
 
   const handleRotateMatrix = () => {
     try {
@@ -98,7 +117,7 @@ export function MatrixRotateContainer(props: MatrixRotateContainerProps) {
         size={size}
         direction={direction}
         onSizeChange={handleSizeChange}
-        onDirectionChange={setDirection}
+        onDirectionChange={handleDirectionChange}
       />
 
       <div className="space-y-6">
