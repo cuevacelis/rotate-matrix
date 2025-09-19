@@ -1,14 +1,8 @@
 # 🔄 Rotador de Matrices# = Rotador de Matrices
 
-
-
 Una aplicación web interactiva construida con **Next.js 15** y **TypeScript** que permite rotar matrices NxN en sentido horario o antihorario de manera visual y fácil de usar.Una aplicaci�n web interactiva construida con **Next.js 15** y **TypeScript** que permite rotar matrices NxN en sentido horario o antihorario de manera visual y f�cil de usar.
 
-
-
 ## ✨ Características## Caracter�sticas
-
-
 
 - 🔄 **Rotación de matrices** en tiempo real (horaria y antihoraria)- <� **Rotaci�n de matrices** en tiempo real (horaria y antihoraria)
 
@@ -28,19 +22,11 @@ Una aplicación web interactiva construida con **Next.js 15** y **TypeScript** q
 
 - ⚡ **Optimización** con Turbopack- � **Optimizaci�n** con Turbopack
 
-
-
 ## 🎯 Demo## Demo
-
-
 
 Configura el tamaño de la matriz, introduce los valores numéricos y observa cómo se transforma la matriz al rotarla. Los resultados se muestran lado a lado para comparar fácilmente.Configura el tama�o de la matriz, introduce los valores num�ricos y observa c�mo se transforma la matriz al rotarla. Los resultados se muestran lado a lado para comparar f�cilmente.
 
-
-
 ## 🛠️ Tecnologías## Tecnolog�as
-
-
 
 - **Framework:** Next.js 15 con App Router- **Framework:** Next.js 15 con App Router
 
@@ -58,13 +44,9 @@ Configura el tamaño de la matriz, introduce los valores numéricos y observa c�
 
 - **Formularios:** React Hook Form- **Formularios:** React Hook Form
 
-
-
 ## 🚀 Instalación## =� Instalaci�n
 
-
-
-```bash```bash
+`bash`bash
 
 # Clonar el repositorio# Clonar el repositorio
 
@@ -72,19 +54,15 @@ git clone https://github.com/cuevacelis/rotate-matrix.gitgit clone https://githu
 
 cd rotate-matrixcd rotate-matrix
 
-
-
 # Instalar dependencias# Instalar dependencias
 
 pnpm installnpm install
-
-
 
 # Ejecutar en desarrollo# Ejecutar en desarrollo
 
 pnpm devnpm run dev
 
-``````
+````
 
 
 
@@ -114,13 +92,9 @@ pnpm test:watchnpm run test:watch
 
 pnpm test:coveragenpm run test:coverage
 
-``````
-
-
+````
 
 ### 📊 Cobertura de Tests### Cobertura de Tests
-
-
 
 - **Utilidades de matriz** - Rotación horaria/antihoraria, creación de matrices vacías- **Utilidades de matriz** - Rotaci�n horaria/antihoraria, creaci�n de matrices vac�as
 
@@ -130,51 +104,31 @@ pnpm test:coveragenpm run test:coverage
 
 - **Casos edge** - Matrices inválidas, tamaños fuera de rango- **Casos edge** - Matrices inv�lidas, tama�os fuera de rango
 
-## 🎮 Funcionalidades Principales
-
-## <� Funcionalidades Principales
+## 🎮 Funcionalidades Principale
 
 ### Rotación de Matrices
 
-### Rotaci�n de Matrices
-
 - **Horaria (90°):** Rota la matriz 90 grados en sentido horario
 
-- **Antihoraria (90°):** Rota la matriz 90 grados en sentido antihorario- **Horaria (90�):** Rota la matriz 90 grados en sentido horario
-
-- **Algoritmo optimizado** para matrices NxN- **Antihoraria (90�):** Rota la matriz 90 grados en sentido antihorario
-
-- **Algoritmo optimizado** para matrices NxN
+- **Antihoraria (90°):** Rota la matriz 90 grados en sentido antihorario
 
 ### Configuración Flexible
 
-### Configuraci�n Flexible
-
 - **Tamaño dinámico:** 2x2 hasta 10x10
 
-- **Valores numéricos:** Enteros y decimales, positivos y negativos- **Tama�o din�mico:** 2x2 hasta 10x10
+- **Valores numéricos:** Enteros y decimales, positivos y negativos
 
-- **Persistencia:** Los parámetros se guardan en la URL- **Valores num�ricos:** Enteros y decimales, positivos y negativos
-
-- **Persistencia:** Los par�metros se guardan en la URL
-
-### Validaciones
+- **Persistencia:** Los parámetros se guardan en la URL
 
 ### Validaciones
 
 - **Zod schemas** para validación type-safe
 
-- **Mensajes de error** claros y descriptivos- **Zod schemas** para validaci�n type-safe
-
-- **Validación en tiempo real** antes de la rotación- **Mensajes de error** claros y descriptivos
-
-- **Validaci�n en tiempo real** antes de la rotaci�n
+- **Mensajes de error** claros y descriptivos
 
 ## 📝 Scripts Disponibles
 
-## =' Scripts Disponibles
-
-```bash
+````bash
 
 pnpm dev             # Servidor de desarrollo con Turbopack```bash
 
@@ -192,7 +146,7 @@ pnpm test:coverage   # Tests con coberturanpm run test:watch   # Tests en modo w
 
 ```npm run test:coverage # Tests con cobertura
 
-```
+````
 
 ## 🌐 URL Persistente
 
@@ -200,7 +154,7 @@ pnpm test:coverage   # Tests con coberturanpm run test:watch   # Tests en modo w
 
 La aplicación mantiene el estado de configuración en los parámetros de la URL:
 
-- `?size=4` - Tamaño de la matrizP **�Si te gusta este proyecto, dale una estrella!** P
+- `?size=4` - Tamaño de la matriz
 
 - `&direction=clockwise` - Dirección de rotación
 
@@ -215,10 +169,6 @@ Las contribuciones son bienvenidas. Para cambios importantes:
 3. Commitea tus cambios (`git commit -m 'Add some AmazingFeature'`)
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ---
 
