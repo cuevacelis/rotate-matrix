@@ -6,7 +6,7 @@ Una aplicación web interactiva construida con **Next.js 15** y **TypeScript** q
 
 Configura el tamaño de la matriz, introduce los valores numéricos y observa cómo se transforma la matriz al rotarla. Los resultados se muestran lado a lado para comparar fácilmente.
 
-## ✨ Características## Caracter�sticas
+## ✨ Características
 
 - 🔄 **Rotación de matrices** en tiempo real (horaria y antihoraria)
 - 📐 **Matrices configurables** de 2x2 hasta 10x10
