@@ -28,10 +28,14 @@ export function MatrixContainer() {
   const { createQueryString } = useQueryString();
 
   const [size, setSize] = useState<number>(
-    parseInt(searchParams.get(MATRIX_QUERY_PARAMS.SIZE) || MATRIX_SIZE.DEFAULT.toString())
+    parseInt(
+      searchParams.get(MATRIX_QUERY_PARAMS.SIZE) ||
+        MATRIX_SIZE.DEFAULT.toString()
+    )
   );
   const [direction, setDirection] = useState<RotationDirection>(
-    (searchParams.get(MATRIX_QUERY_PARAMS.DIRECTION) || "clockwise") as RotationDirection
+    (searchParams.get(MATRIX_QUERY_PARAMS.DIRECTION) ||
+      "clockwise") as RotationDirection
   );
 
   const [matrix, setMatrix] = useState<number[][]>(createEmptyMatrix(size));
